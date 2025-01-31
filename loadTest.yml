@@ -1,0 +1,20 @@
+config:
+  plugins:
+    ensure:
+      p99: 1000
+      maxErrorRate: 1 # accept error rate equal 1%
+
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 5 # Test duration in seconds (5 minutes)
+      arrivalRate: 10 # Number of virtual users per second
+      name: 'Warm-up phase'
+    - duration: 5 # Test duration in seconds (5 minutes)
+      arrivalRate: 50 # Number of virtual users per second
+      name: 'Warm-up phase 2'
+
+scenarios:
+  - name: 'Test endpoint /'
+    flow:
+      - get:
+          url: '/'

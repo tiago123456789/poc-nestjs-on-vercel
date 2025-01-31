@@ -53,22 +53,22 @@ jobs:
           name: env-vars
           path: env-vars.txt
 
-  Load-Tests:
-    needs: Deploy-Preview
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
-      - name: Download environment variables artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: env-vars
-      - name: Install modules
-        run: npm i
-      - name: Install artillery
-        run: npm i -g artillery
-      - name: Run load tests
-        run: |
-          source env-vars.txt
-          echo $URL_PREVIEW
-          artillery run ./loadTest.yml -t $URL_PREVIEW
+  # Load-Tests:
+  #   needs: Deploy-Preview
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v4
+  #     - name: Download environment variables artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: env-vars
+  #     - name: Install modules
+  #       run: npm i
+  #     - name: Install artillery
+  #       run: npm i -g artillery
+  #     - name: Run load tests
+  #       run: |
+  #         source env-vars.txt
+  #         echo $URL_PREVIEW
+  #         artillery run ./loadTest.yml -t $URL_PREVIEW

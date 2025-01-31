@@ -39,5 +39,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '${{ steps.deploy_preview.outputs.stdout }}''
+              body: ${{ steps.deploy_preview.outputs.stdout }}
             })

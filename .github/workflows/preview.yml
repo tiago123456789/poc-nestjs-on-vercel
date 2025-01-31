@@ -33,7 +33,7 @@ jobs:
         run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
       - name: Get preview url
         run: |
-          echo "URL_PREVIEW=$(curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url') >> $GITHUB_ENV
+          echo URL_PREVIEW=$(curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url') >> $GITHUB_ENV
           echo "URL_PREVIEW=${{ env.URL_PREVIEW }}" >> $GITHUB_OUTPUT
 
       - name: Add comment to PR

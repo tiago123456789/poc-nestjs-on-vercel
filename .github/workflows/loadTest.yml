@@ -1,4 +1,4 @@
-name: Load test to preview deployed environment
+name: Load tests to preview deployed environment
 
 on:
   workflow_dispatch:

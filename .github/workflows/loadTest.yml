@@ -12,9 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
+      - name: Download environment variables artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: env-vars
       - name: Install modules
         run: npm i
       - name: Install artillery
         run: npm i -g artillery
       - name: Run load tests
-        run: artillery run ./loadTest.yml -t https://poc-nestjs-on-vercel-1el0et97x-tiagorosadacostas-projects.vercel.app/
+        run: |
+          source env-vars.txt
+          artillery run ./loadTest.yml -t $URL_PREVIEW

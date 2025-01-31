@@ -17,20 +17,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v4
+
       - name: Install modules
         run: npm i
+
       - name: Build project to deploy
         run: npm run build
+
       - name: Install vercel cli
         run: npm i -g vercel
+
       - name: Create vercel configuration
         run: |
           mkdir .vercel && \
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > .vercel/project.json
+
       - name: Deploy preview
         id: deploy_preview
         run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
+
       - name: Get preview url
         run: |
           echo URL_PREVIEW=$(curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url') >> $GITHUB_ENV

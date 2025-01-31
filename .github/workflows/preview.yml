@@ -29,4 +29,15 @@ jobs:
           mkdir .vercel && \
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > .vercel/project.json
       - name: Deploy preview
-        run: echo $(vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes) > ./output.txt && cat ./output.txt
+        run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
+      - name: Add comment to PR
+        env:
+          URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -X POST \
+            $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data '{ "body": "blah blah" }'

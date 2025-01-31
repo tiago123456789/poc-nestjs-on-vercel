@@ -31,6 +31,9 @@ jobs:
       - name: Deploy preview
         id: deploy_preview
         run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
+      - name: Get preview url
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url'
       # - name: Add comment to PR
       #   uses: actions/github-script@v6
       #   with:

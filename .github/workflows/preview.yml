@@ -70,4 +70,5 @@ jobs:
       - name: Run load tests
         run: |
           source env-vars.txt
+          echo $URL_PREVIEW
           artillery run ./loadTest.yml -t $URL_PREVIEW

@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  Deploy-Preview:
+  Load-Tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,26 +18,3 @@ jobs:
         run: npm i -g artillery
       - name: Run load tests
         run: artillery run ./loadTest.yml -t https://poc-nestjs-on-vercel-1el0et97x-tiagorosadacostas-projects.vercel.app/
-      - name: Add comment to PR if load tests passed
-        if: ${{ success() }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "Load tests passed :)"
-            })
-
-      - name: Add comment to PR if load tests failed
-        if: ${{ failure() }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "Load tests no passed :("
-            })

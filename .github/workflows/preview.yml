@@ -34,6 +34,7 @@ jobs:
       - name: Get preview url
         run: |
           echo URL_PREVIEW=$(curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url') >> $GITHUB_ENV
+          echo URL_PREVIEW=${{ env.URL_PREVIEW }} >> env-vars.txt
 
       - name: Add comment to PR
         uses: actions/github-script@v6
@@ -45,3 +46,9 @@ jobs:
               repo: context.repo.repo,
               body: "Link preview: ${{ env.URL_PREVIEW }} \n 👋 Bye!"
             })
+
+      - name: Upload environment variables
+        uses: actions/upload-artifact@v2
+        with:
+          name: env-vars
+          path: env-vars.txt

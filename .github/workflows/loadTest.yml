@@ -1,0 +1,23 @@
+name: Load test to preview deployed environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      url_preview_deploy:
+        type: string
+        description: URL preview deploy
+        required: true
+
+jobs:
+  Load-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+      - name: Install modules
+        run: npm i
+      - name: Install artillery
+        run: npm i -g artillery
+      - name: Run load tests
+        run: |
+          artillery run ./loadTest.yml -t  ${{ inputs.url_preview_deploy }}"

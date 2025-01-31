@@ -45,30 +45,3 @@ jobs:
               repo: context.repo.repo,
               body: "Link preview: ${{ env.URL_PREVIEW }} \n 👋 Bye!"
             })
-
-      # - name: Upload environment variables
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: env-vars
-      #     path: env-vars.txt
-
-  Load-Tests:
-    needs: Deploy-Preview
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v4
-      # - name: Download environment variables artifact
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: env-vars
-      - name: Install modules
-        run: npm i
-      - name: Install artillery
-        run: npm i -g artillery
-      - name: Run load tests
-        run: |
-          echo "${{ needs.Deploy-Preview.outputs.URL_PREVIEW }}"
-
-          echo "${{ env.URL_PREVIEW }}"
-          artillery run ./loadTest.yml -t "${{ needs.Deploy-Preview.outputs.URL_PREVIEW }}"

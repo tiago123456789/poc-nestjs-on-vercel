@@ -20,4 +20,4 @@ jobs:
         run: npm i -g artillery
       - name: Run load tests
         run: |
-          artillery run ./loadTest.yml -t  ${{ inputs.url_preview_deploy }}"
+          artillery run ./loadTest.yml -t  ${{ inputs.url_preview_deploy }}

@@ -29,4 +29,4 @@ jobs:
           mkdir .vercel && \
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > .vercel/project.json
       - name: Deploy preview
-        run: export VERCEL_TOKEN=${{ secrets.VERCEL_ACCESS_TOKEN }} && vercel deploy --yes
+        run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }}  --yes

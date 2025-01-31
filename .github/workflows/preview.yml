@@ -67,4 +67,6 @@ jobs:
       - name: Install artillery
         run: npm i -g artillery
       - name: Run load tests
-        run: artillery run ./loadTest.yml -t "${{ env.URL_PREVIEW }}"
+        run: |
+          echo "${{ env.URL_PREVIEW }}"
+          artillery run ./loadTest.yml -t "${{ env.URL_PREVIEW }}"

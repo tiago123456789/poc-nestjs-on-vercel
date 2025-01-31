@@ -33,14 +33,15 @@ jobs:
         run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
       - name: Get preview url
         run: |
-          curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url'
-      # - name: Add comment to PR
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: "${{ steps.deploy_preview.outputs.stdout }}""
-      #       })
+          echo URL_PREVIEW=$(curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" | jq --raw-output '.deployments[0].url') >> $GITHUB_ENV
+
+      - name: Add comment to PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Link preview => ${{ env.URL_PREVIEW }} "
+            })

@@ -29,13 +29,9 @@ jobs:
           mkdir .vercel && \
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > .vercel/project.json
       - name: Deploy preview
+        id: deploy_preview
         run: vercel deploy --token ${{ secrets.VERCEL_ACCESS_TOKEN }} --yes
-      - name: Get preview url
-        run: |
-          curl -H "Authorization: Bearer ${{ secrets.VERCEL_ACCESS_TOKEN }}" \
-           "https://api.vercel.com/v5/now/deployments?scope=tiagorosadacostas-projects" \
-           | jq --raw-output '.deployments[0].url'
-      
+      # - name: Add comment to PR
       #   uses: actions/github-script@v6
       #   with:
       #     script: |
@@ -43,5 +39,5 @@ jobs:
       #         issue_number: context.issue.number,
       #         owner: context.repo.owner,
       #         repo: context.repo.repo,
-      #         body: "${{ steps.deploy_preview.outputs.stdout }}"
-            })
+      #         body: "${{ steps.deploy_preview.outputs.stdout }}""
+      #       })
